@@ -1,0 +1,6 @@
+# Every bug in RefundService, and nothing in SafeRefundService.
+src/Service/RefundService.php:29 money.sideEffectInTransaction
+src/Service/RefundService.php:30 money.sideEffectInTransaction
+src/Service/RefundService.php:40 money.checkThenAct
+src/Service/RefundService.php:46 money.balanceOutsideLedger
+src/Service/RefundService.php:50 money.float

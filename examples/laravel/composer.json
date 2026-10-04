@@ -1,0 +1,33 @@
+{
+    "name": "ianfoxdev/money-lint-example-laravel",
+    "description": "A Laravel checkout with the bugs money-lint finds, and the same code fixed.",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": "^8.3",
+        "laravel/framework": "^12.0 || ^13.0"
+    },
+    "require-dev": {
+        "ianfoxdev/money-lint": "@dev",
+        "larastan/larastan": "^3.12",
+        "orchestra/testbench": "^10.0 || ^11.0",
+        "phpstan/extension-installer": "^1.4"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../.."
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        },
+        "sort-packages": true
+    }
+}

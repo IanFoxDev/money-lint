@@ -1,0 +1,13 @@
+# money-lint is included by phpstan/extension-installer, like phpstan-doctrine.
+parameters:
+  level: 6
+  paths:
+    - src
+  money:
+    properties:
+      - '*amount'
+    balances:
+      - App\Entity\Account::balance
+    balanceWriters:
+      - App\Ledger\Ledger
+      - App\Entity\Account

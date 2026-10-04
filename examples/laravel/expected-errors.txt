@@ -1,0 +1,8 @@
+# Every bug in CheckoutController, and nothing in SafeCheckoutController.
+app/Http/Controllers/CheckoutController.php:25 money.sideEffectInTransaction
+app/Http/Controllers/CheckoutController.php:26 money.dispatchInTransaction
+app/Http/Controllers/CheckoutController.php:27 money.dispatchInTransaction
+app/Http/Controllers/CheckoutController.php:34 money.checkThenAct
+app/Http/Controllers/CheckoutController.php:34 money.balanceOutsideLedger
+app/Http/Controllers/CheckoutController.php:40 money.balanceOutsideLedger
+app/Http/Controllers/CheckoutController.php:43 money.float

@@ -1,0 +1,14 @@
+# money-lint is included by phpstan/extension-installer, like Larastan.
+parameters:
+  level: 6
+  paths:
+    - app
+  money:
+    properties:
+      - '*amount'
+      - balance
+    balances:
+      - App\Models\Wallet::balance
+      - wallets.balance
+    balanceWriters:
+      - App\Ledger\Ledger

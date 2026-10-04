@@ -33,6 +33,12 @@ parameters:
 | [`money.balanceOutsideLedger`](docs/rules/balance-outside-ledger.md) | A balance you listed changed outside the ledger: `increment()`, `+=`, `UPDATE ... SET balance` |
 | [`money.checkThenAct`](docs/rules/check-then-act.md) | Money read without a lock, changed from its old value and saved: a lost update under concurrency |
 
+## Examples
+
+[examples/](examples) has a Laravel checkout and Symfony refunds with each bug in one
+file and the same code fixed in another. CI checks that every bug is reported and the
+fixed code is clean, with Larastan and phpstan-doctrine loaded next to money-lint.
+
 ## License
 
 [MIT](LICENSE)
