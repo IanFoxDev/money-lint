@@ -63,6 +63,9 @@ Pick one, in order of preference:
 
 3. Mark the call: `CreditWallet::dispatch($payment->id)->afterCommit();`
 
+A mailable has no `afterCommit()` method (Laravel 13). Mark the class instead: implement
+`ShouldQueueAfterCommit`, or declare `public $afterCommit = true;`.
+
 With any of them Laravel holds the job until the transaction commits and drops it if
 the transaction rolls back.
 
