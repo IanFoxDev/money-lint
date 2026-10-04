@@ -33,6 +33,12 @@ parameters:
 | [`money.balanceOutsideLedger`](docs/rules/balance-outside-ledger.md) | A balance you listed changed outside the ledger: `increment()`, `+=`, `UPDATE ... SET balance` |
 | [`money.checkThenAct`](docs/rules/check-then-act.md) | Money read without a lock, changed from its old value and saved: a lost update under concurrency |
 
+## How often it is right
+
+On five open-source applications that handle money, `money.float` found money in
+floats with 94% precision, and one report in four was in code where it can cost a cent.
+The run and what it changed: [docs/precision.md](docs/precision.md).
+
 ## Examples
 
 [examples/](examples) has a Laravel checkout and Symfony refunds with each bug in one
