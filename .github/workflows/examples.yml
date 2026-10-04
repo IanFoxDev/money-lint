@@ -1,0 +1,27 @@
+name: examples
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  example:
+    name: ${{ matrix.example }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        example: [laravel, symfony]
+    defaults:
+      run:
+        working-directory: examples/${{ matrix.example }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+          coverage: none
+      - run: composer install --no-progress
+      # Every bug in the buggy code is reported, and nothing in the fixed code.
+      - run: php ../check.php
