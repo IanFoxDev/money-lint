@@ -11,3 +11,6 @@ configuration or rule identifiers; such changes are marked **BREAKING**.
 
 - `#[Money]` attribute and `parameters.money` settings (`properties` name patterns,
   `attributes`) that tell the rules which values are money.
+- `money.float`: money properties and parameters typed `float`; `(float)`,
+  `floatval()` and `round($money, 2)` on money; float literals written into money
+  properties. See [docs/rules/float.md](docs/rules/float.md).

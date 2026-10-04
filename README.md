@@ -23,6 +23,12 @@ parameters:
     properties: ['*amount', '*balance', '*fee']
 ```
 
+## Rules
+
+| Identifier | Reports |
+|---|---|
+| [`money.float`](docs/rules/float.md) | Money held in a float: typed `float`, cast with `(float)`, rounded to decimal places |
+
 ## License
 
 [MIT](LICENSE)
