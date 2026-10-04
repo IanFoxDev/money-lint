@@ -23,3 +23,7 @@ configuration or rule identifiers; such changes are marked **BREAKING**.
   queue inside a transaction without `afterCommit()`. `parameters.money.queueAfterCommit`
   turns it off for apps whose queues wait for commits. See
   [docs/rules/dispatch-in-transaction.md](docs/rules/dispatch-in-transaction.md).
+- `money.balanceOutsideLedger`: balances listed in `parameters.money.balances` changed
+  outside the classes in `parameters.money.balanceWriters`, through assignments,
+  Eloquent `increment()` and `update()`, the query builder, setters, SQL or DQL. See
+  [docs/rules/balance-outside-ledger.md](docs/rules/balance-outside-ledger.md).
