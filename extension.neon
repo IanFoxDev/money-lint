@@ -4,6 +4,7 @@ parametersSchema:
     attributes: listOf(string())
     transactions: listOf(string())
     sideEffects: listOf(string())
+    queueAfterCommit: bool()
   ])
 
 parameters:
@@ -41,6 +42,11 @@ parameters:
       - RdKafka\ProducerTopic::produce|producev
       - Stripe\Service\AbstractService::*
 
+    # Set to true when every queue connection has 'after_commit' => true in
+    # config/queue.php: queued jobs then wait for the commit and money.dispatchInTransaction
+    # has nothing to report.
+    queueAfterCommit: false
+
 services:
   -
     class: IanFoxDev\MoneyLint\MoneyDetector
@@ -70,6 +76,18 @@ services:
       transactions: @moneyLint.transactions
     tags:
       - phpstan.collector
+  -
+    class: IanFoxDev\MoneyLint\Rules\Transaction\QueuedDispatch
+  -
+    class: IanFoxDev\MoneyLint\Rules\Transaction\DispatchCollector
+    tags:
+      - phpstan.collector
+  -
+    class: IanFoxDev\MoneyLint\Rules\Transaction\DispatchInTransactionRule
+    arguments:
+      queueAfterCommit: %money.queueAfterCommit%
+    tags:
+      - phpstan.rules.rule
   -
     class: IanFoxDev\MoneyLint\Rules\Transaction\SideEffectCollector
     arguments:

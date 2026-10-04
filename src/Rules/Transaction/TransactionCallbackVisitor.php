@@ -30,6 +30,9 @@ final class TransactionCallbackVisitor extends NodeVisitorAbstract
     /** Set on a call inside a transaction callback: the number of that transaction call. */
     public const INSIDE = 'moneyLintInsideTransaction';
 
+    /** Set on a call followed by ->afterCommit() or ->beforeCommit() in the same chain. */
+    public const COMMIT_CHAINED = 'moneyLintCommitChained';
+
     private const IMMEDIATE_FUNCTIONS = [
         'array_map' => true,
         'array_filter' => true,
@@ -83,6 +86,16 @@ final class TransactionCallbackVisitor extends NodeVisitorAbstract
         }
         if (!$node instanceof Expr\CallLike || $node->isFirstClassCallable()) {
             return null;
+        }
+
+        if ($node instanceof Expr\MethodCall && $node->name instanceof Identifier
+            && in_array($node->name->toLowerString(), ['aftercommit', 'beforecommit'], true)) {
+            $root = $node->var;
+            while ($root instanceof Expr\MethodCall || $root instanceof Expr\NullsafeMethodCall) {
+                $root->setAttribute(self::COMMIT_CHAINED, true);
+                $root = $root->var;
+            }
+            $root->setAttribute(self::COMMIT_CHAINED, true);
         }
 
         $current = $this->stack[count($this->stack) - 1];

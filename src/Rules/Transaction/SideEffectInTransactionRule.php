@@ -26,12 +26,7 @@ final class SideEffectInTransactionRule implements Rule
 
     public function processNode(Node $node, Scope $scope): array
     {
-        $transactions = [];
-        foreach ($node->get(TransactionCallCollector::class) as $file => $calls) {
-            foreach ($calls as [$number, $call]) {
-                $transactions[$file][$number] = $call;
-            }
-        }
+        $transactions = Transactions::confirmed($node);
 
         $errors = [];
         foreach ($node->get(SideEffectCollector::class) as $file => $sideEffects) {
