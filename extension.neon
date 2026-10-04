@@ -66,6 +66,16 @@ services:
   -
     class: IanFoxDev\MoneyLint\Rules\Ledger\Balances
     arguments: [%money.balances%, %money.balanceWriters%]
+  -
+    class: IanFoxDev\MoneyLint\Rules\Race\FunctionNumberVisitor
+    tags:
+      - phpstan.parser.richParserNodeVisitor
+  -
+    class: IanFoxDev\MoneyLint\Rules\Race\Loads
+  -
+    class: IanFoxDev\MoneyLint\Rules\Race\CheckThenActCollector
+    tags:
+      - phpstan.collector
   moneyLint.transactions:
     class: IanFoxDev\MoneyLint\CallPatterns
     arguments: [%money.transactions%]
@@ -107,6 +117,7 @@ services:
       - phpstan.collector
 
 rules:
+  - IanFoxDev\MoneyLint\Rules\Race\CheckThenActRule
   - IanFoxDev\MoneyLint\Rules\Ledger\BalanceOutsideLedgerRule
   - IanFoxDev\MoneyLint\Rules\Transaction\SideEffectInTransactionRule
   - IanFoxDev\MoneyLint\Rules\Float\FloatPropertyRule
