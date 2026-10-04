@@ -1,0 +1,36 @@
+name: False report
+description: A rule reports code that is correct
+labels: ["false-report"]
+body:
+  - type: input
+    id: rule
+    attributes:
+      label: Rule identifier
+      placeholder: money.float
+    validations:
+      required: true
+  - type: textarea
+    id: code
+    attributes:
+      label: The smallest code that shows it
+      description: A class or function that can be pasted into a fixture. Remove anything specific to your company.
+      render: php
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why the code is correct
+    validations:
+      required: true
+  - type: textarea
+    id: config
+    attributes:
+      label: parameters.money from your phpstan.neon
+      render: yaml
+  - type: input
+    id: versions
+    attributes:
+      label: money-lint, PHPStan, Larastan or phpstan-doctrine versions
+    validations:
+      required: true

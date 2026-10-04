@@ -1,0 +1,18 @@
+name: Rule request
+description: A mistake in money code that a new rule could catch
+labels: ["rule-request"]
+body:
+  - type: textarea
+    id: mistake
+    attributes:
+      label: The mistake
+      description: What the code looks like and what it costs when it happens.
+    validations:
+      required: true
+  - type: textarea
+    id: certain
+    attributes:
+      label: How a rule can be sure
+      description: What in the code makes the failure certain, and what similar code is correct and must not be reported.
+    validations:
+      required: true

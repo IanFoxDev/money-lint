@@ -1,0 +1,23 @@
+name: Missed bug
+description: Code that loses money and is not reported
+labels: ["missed-bug"]
+body:
+  - type: textarea
+    id: code
+    attributes:
+      label: The code
+      description: The smallest example. Remove anything specific to your company.
+      render: php
+    validations:
+      required: true
+  - type: textarea
+    id: failure
+    attributes:
+      label: How it loses money
+      description: The sequence of events, for example two callbacks at once, a rollback after a call.
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: money-lint and PHPStan versions
