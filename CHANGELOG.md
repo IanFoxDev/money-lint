@@ -19,3 +19,7 @@ configuration or rule identifiers; such changes are marked **BREAKING**.
   Both lists can be extended in `parameters.money.transactions` and
   `parameters.money.sideEffects`. See
   [docs/rules/side-effect-in-transaction.md](docs/rules/side-effect-in-transaction.md).
+- `money.dispatchInTransaction`: Laravel jobs, queued closures and mails put on the
+  queue inside a transaction without `afterCommit()`. `parameters.money.queueAfterCommit`
+  turns it off for apps whose queues wait for commits. See
+  [docs/rules/dispatch-in-transaction.md](docs/rules/dispatch-in-transaction.md).
