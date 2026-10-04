@@ -1,0 +1,9 @@
+includes:
+  - ../../extension.neon
+
+parameters:
+  money:
+    properties:
+      - '*amount'
+    attributes:
+      - App\Domain\Cash

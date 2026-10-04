@@ -1,0 +1,20 @@
+parametersSchema:
+  money: structure([
+    properties: listOf(string())
+    attributes: listOf(string())
+  ])
+
+parameters:
+  money:
+    # fnmatch() patterns for property and parameter names that hold money, such as
+    # '*amount' or 'balance'. Empty by default: see docs/adr/0001-what-counts-as-money.md.
+    properties: []
+    attributes:
+      - IanFoxDev\MoneyLint\Attribute\Money
+
+services:
+  -
+    class: IanFoxDev\MoneyLint\MoneyDetector
+    arguments:
+      properties: %money.properties%
+      attributes: %money.attributes%
