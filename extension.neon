@@ -2,6 +2,8 @@ parametersSchema:
   money: structure([
     properties: listOf(string())
     attributes: listOf(string())
+    transactions: listOf(string())
+    sideEffects: listOf(string())
   ])
 
 parameters:
@@ -12,6 +14,33 @@ parameters:
     attributes:
       - IanFoxDev\MoneyLint\Attribute\Money
 
+    # Methods that run a callback in a database transaction. 'Class::method', the class
+    # matches its subtypes, several methods are joined with '|'.
+    transactions:
+      - Illuminate\Database\ConnectionInterface::transaction
+      - Illuminate\Support\Facades\DB::transaction
+      - DB::transaction
+      - Doctrine\DBAL\Connection::transactional
+      - Doctrine\ORM\EntityManagerInterface::wrapInTransaction
+
+    # Calls that leave the process and cannot be rolled back: HTTP, email, brokers.
+    sideEffects:
+      - Psr\Http\Client\ClientInterface::sendRequest
+      - GuzzleHttp\ClientInterface::send|sendAsync|request|requestAsync
+      - GuzzleHttp\Client::get|head|put|post|patch|delete|getAsync|headAsync|putAsync|postAsync|patchAsync|deleteAsync
+      - Symfony\Contracts\HttpClient\HttpClientInterface::request
+      - Illuminate\Support\Facades\Http::get|head|post|put|patch|delete|send|pool
+      - Http::get|head|post|put|patch|delete|send|pool
+      - Illuminate\Http\Client\PendingRequest::get|head|post|put|patch|delete|send|pool
+      - Illuminate\Support\Facades\Mail::send|raw|html|plain
+      - Mail::send|raw|html|plain
+      - Illuminate\Mail\PendingMail::send
+      - Illuminate\Contracts\Mail\Mailer::send|raw|html|plain
+      - Symfony\Component\Mailer\MailerInterface::send
+      - PhpAmqpLib\Channel\AMQPChannel::basic_publish|publish_batch
+      - RdKafka\ProducerTopic::produce|producev
+      - Stripe\Service\AbstractService::*
+
 services:
   -
     class: IanFoxDev\MoneyLint\MoneyDetector
@@ -20,8 +49,36 @@ services:
       attributes: %money.attributes%
   -
     class: IanFoxDev\MoneyLint\MoneyExpressions
+  moneyLint.transactions:
+    class: IanFoxDev\MoneyLint\CallPatterns
+    arguments: [%money.transactions%]
+    autowired: false
+  moneyLint.sideEffects:
+    class: IanFoxDev\MoneyLint\CallPatterns
+    arguments: [%money.sideEffects%]
+    autowired: false
+  -
+    class: IanFoxDev\MoneyLint\Rules\Transaction\CallDescriber
+  -
+    class: IanFoxDev\MoneyLint\Rules\Transaction\TransactionCallbackVisitor
+    arguments: [@moneyLint.transactions]
+    tags:
+      - phpstan.parser.richParserNodeVisitor
+  -
+    class: IanFoxDev\MoneyLint\Rules\Transaction\TransactionCallCollector
+    arguments:
+      transactions: @moneyLint.transactions
+    tags:
+      - phpstan.collector
+  -
+    class: IanFoxDev\MoneyLint\Rules\Transaction\SideEffectCollector
+    arguments:
+      sideEffects: @moneyLint.sideEffects
+    tags:
+      - phpstan.collector
 
 rules:
+  - IanFoxDev\MoneyLint\Rules\Transaction\SideEffectInTransactionRule
   - IanFoxDev\MoneyLint\Rules\Float\FloatPropertyRule
   - IanFoxDev\MoneyLint\Rules\Float\FloatParameterRule
   - IanFoxDev\MoneyLint\Rules\Float\FloatConversionRule
