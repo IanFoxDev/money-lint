@@ -28,6 +28,7 @@ parameters:
 | Identifier | Reports |
 |---|---|
 | [`money.float`](docs/rules/float.md) | Money held in a float: typed `float`, cast with `(float)`, rounded to decimal places |
+| [`money.sideEffectInTransaction`](docs/rules/side-effect-in-transaction.md) | An HTTP call, email or broker message inside `DB::transaction()` or `wrapInTransaction()` |
 
 ## License
 
