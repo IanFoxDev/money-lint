@@ -43,6 +43,9 @@ marked as money. Local variables are not followed.
 
 - `round($cents / 100, 2)` and other arithmetic on money: it is usually formatting
   for display, and reporting it would be wrong too often.
+- A conversion that is only compared with zero or checked for truth:
+  `(float) $amount > 0`, `! (float) $discount`, `floatval($balance) == 0`. A float keeps
+  the sign and the zero of a decimal amount exactly.
 - `round($money)` without decimal places.
 - Floats that are not marked as money: rates, weights, percentages.
 - Values of `Money\Money` or `Brick\Money\Money`.

@@ -18,7 +18,8 @@ use PHPStan\Rules\RuleErrorBuilder;
 
 /**
  * Money turned into a float: (float), floatval(), round() to decimal places, or a
- * float literal written into a money property.
+ * float literal written into a money property. A conversion that is only compared
+ * with zero or checked for truth is left alone (see ZeroCheckVisitor).
  *
  * @implements Rule<Expr>
  */
@@ -33,6 +34,9 @@ final class FloatConversionRule implements Rule
 
     public function processNode(Node $node, Scope $scope): array
     {
+        if ($node->getAttribute(ZeroCheckVisitor::ZERO_CHECK) === true) {
+            return [];
+        }
         if ($node instanceof Expr\Cast\Double && $this->money->isMoney($node->expr, $scope)) {
             return [$this->error(sprintf('Money %s is cast to float.', $this->money->describe($node->expr)))];
         }

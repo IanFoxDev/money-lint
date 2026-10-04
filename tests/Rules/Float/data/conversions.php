@@ -41,6 +41,13 @@ function convert(Payment $payment, int $amount, int $count, ?Payment $maybe): vo
     $payment->quantity = 1.5;
     $local = $payment->amount;
     $ok6 = (float) $local;
+    // Only the sign or the zero is checked: exact in a float.
+    $ok8 = (float) $payment->amount > 0;
+    $ok9 = ! (float) $payment->amount;
+    $ok10 = floatval($amount) == 0 ? 'free' : 'paid';
+    if ((float) $payment->total) {
+        $ok11 = 0 < (float) $payment->amount;
+    }
     // Cents to a decimal number, usually for display: too often right to report.
     $ok7 = round($payment->amount / 100, 2);
 }

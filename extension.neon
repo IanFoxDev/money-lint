@@ -64,6 +64,10 @@ services:
   -
     class: IanFoxDev\MoneyLint\MoneyExpressions
   -
+    class: IanFoxDev\MoneyLint\Rules\Float\ZeroCheckVisitor
+    tags:
+      - phpstan.parser.richParserNodeVisitor
+  -
     class: IanFoxDev\MoneyLint\Rules\Ledger\Balances
     arguments: [%money.balances%, %money.balanceWriters%]
   -
