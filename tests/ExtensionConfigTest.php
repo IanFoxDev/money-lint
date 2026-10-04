@@ -23,6 +23,7 @@ final class ExtensionConfigTest extends PHPStanTestCase
         $detector = self::getContainer()->getByType(MoneyDetector::class);
 
         self::assertTrue($detector->isMoneyName('refundAmount'));
+        self::assertTrue($detector->isMoneyName('balance'));
         self::assertTrue($detector->isMoneyDeclaration('total', [Money::class]));
         self::assertTrue($detector->isMoneyDeclaration('total', ['App\\Domain\\Cash']));
     }

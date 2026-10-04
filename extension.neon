@@ -18,3 +18,10 @@ services:
     arguments:
       properties: %money.properties%
       attributes: %money.attributes%
+  -
+    class: IanFoxDev\MoneyLint\MoneyExpressions
+
+rules:
+  - IanFoxDev\MoneyLint\Rules\Float\FloatPropertyRule
+  - IanFoxDev\MoneyLint\Rules\Float\FloatParameterRule
+  - IanFoxDev\MoneyLint\Rules\Float\FloatConversionRule

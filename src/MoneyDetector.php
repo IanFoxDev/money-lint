@@ -49,13 +49,21 @@ final class MoneyDetector
      */
     public function isMoneyDeclaration(string $name, array $attributeClasses): bool
     {
+        return $this->hasMoneyAttribute($attributeClasses) || $this->isMoneyName($name);
+    }
+
+    /**
+     * @param list<string> $attributeClasses
+     */
+    public function hasMoneyAttribute(array $attributeClasses): bool
+    {
         foreach ($attributeClasses as $class) {
             if (isset($this->attributes[strtolower(ltrim($class, '\\'))])) {
                 return true;
             }
         }
 
-        return $this->isMoneyName($name);
+        return false;
     }
 
     /**
