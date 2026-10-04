@@ -6,6 +6,10 @@
          colors="true"
          failOnRisky="true"
          failOnWarning="true">
+    <php>
+        <!-- Rule tests load Laravel and Doctrine through PHPStan's reflection. -->
+        <ini name="memory_limit" value="1G"/>
+    </php>
     <testsuites>
         <testsuite name="money-lint">
             <directory>tests</directory>
