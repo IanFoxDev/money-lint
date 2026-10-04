@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace IanFoxDev\MoneyLint\Rules\Transaction;
 
+use IanFoxDev\MoneyLint\Types;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\ReflectionProvider;
-use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
-use PHPStan\Type\TypeCombinator;
 
 /**
  * Recognises a Laravel job or mail put on the queue, and whether it waits for the
@@ -194,9 +193,8 @@ final class QueuedDispatch
      */
     private function onAny(Type $receiver, array $classes, string $method): bool
     {
-        $receiver = TypeCombinator::removeNull($receiver);
         foreach ($classes as $class => $methods) {
-            if (in_array($method, $methods, true) && (new ObjectType($class))->isSuperTypeOf($receiver)->yes()) {
+            if (in_array($method, $methods, true) && Types::isInstanceOf($receiver, $class)) {
                 return true;
             }
         }

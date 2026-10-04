@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace IanFoxDev\MoneyLint\Rules\Ledger;
 
+use IanFoxDev\MoneyLint\Types;
 use PHPStan\Analyser\Scope;
-use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
-use PHPStan\Type\TypeCombinator;
 
 /**
  * Balances that only the ledger may change, and the classes that are the ledger.
@@ -65,9 +64,8 @@ final class Balances
      */
     public function forType(Type $type): ?array
     {
-        $type = TypeCombinator::removeNull($type);
         foreach ($this->classes as $class => $columns) {
-            if ((new ObjectType($class))->isSuperTypeOf($type)->yes()) {
+            if (Types::isInstanceOf($type, $class)) {
                 return [$class, $columns];
             }
         }

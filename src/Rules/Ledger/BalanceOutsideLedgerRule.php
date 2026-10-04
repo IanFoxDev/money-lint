@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace IanFoxDev\MoneyLint\Rules\Ledger;
 
 use IanFoxDev\MoneyLint\Rules\RuleDocs;
+use IanFoxDev\MoneyLint\Types;
 use PhpParser\Node;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Identifier;
@@ -14,7 +15,6 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Rules\IdentifierRuleError;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
-use PHPStan\Type\ObjectType;
 
 /**
  * A balance listed in money.balances changed outside the classes listed in
@@ -103,7 +103,7 @@ final class BalanceOutsideLedgerRule implements Rule
 
         // $wallet->setBalance(), $wallet->increment('balance'), Wallet::query()->increment('balance').
         $model = $this->balances->forType($receiver);
-        if ($model === null && (new ObjectType(self::ELOQUENT_BUILDER))->isSuperTypeOf($receiver)->yes()) {
+        if ($model === null && Types::isInstanceOf($receiver, self::ELOQUENT_BUILDER)) {
             $model = $this->balances->forType($receiver->getTemplateType(self::ELOQUENT_BUILDER, 'TModel'));
         }
         if ($model !== null) {
@@ -123,7 +123,7 @@ final class BalanceOutsideLedgerRule implements Rule
         }
 
         // DB::table('wallets')->...->increment('balance').
-        if ((new ObjectType(self::QUERY_BUILDER))->isSuperTypeOf($receiver)->yes()) {
+        if (Types::isInstanceOf($receiver, self::QUERY_BUILDER)) {
             $table = $this->tableOf($call->var, $scope);
             if ($table === null) {
                 return [];

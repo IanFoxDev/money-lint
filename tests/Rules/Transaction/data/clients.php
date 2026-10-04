@@ -49,6 +49,13 @@ function refund(
         $guzzle->request('POST', 'https://psp.test/refunds');
     });
 
+    // Not reported: a value PHPStan could not type (*NEVER*), whatever method is called.
+    $em->wrapInTransaction(function (): void {
+        /** @var never $unknown */
+        $unknown = null;
+        $unknown->saveQuietly();
+    });
+
     // Not reported: outside the transaction.
     $guzzle->post('https://psp.test/refunds');
 }

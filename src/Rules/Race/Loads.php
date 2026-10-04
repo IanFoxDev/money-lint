@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace IanFoxDev\MoneyLint\Rules\Race;
 
+use IanFoxDev\MoneyLint\Types;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\ReflectionProvider;
-use PHPStan\Type\ObjectType;
 use PHPStan\Type\TypeCombinator;
 
 /**
@@ -87,11 +87,11 @@ final class Loads
         $method = $expr->name->toLowerString();
         $receiver = $scope->getType($expr->var);
         $args = count($expr->getArgs());
-        if ($method === 'find' && (new ObjectType(self::ENTITY_MANAGER))->isSuperTypeOf($receiver)->yes()) {
+        if ($method === 'find' && Types::isInstanceOf($receiver, self::ENTITY_MANAGER)) {
             $locked = $args >= 3;
-        } elseif ($method === 'find' && (new ObjectType(self::REPOSITORY))->isSuperTypeOf($receiver)->yes()) {
+        } elseif ($method === 'find' && Types::isInstanceOf($receiver, self::REPOSITORY)) {
             $locked = $args >= 2;
-        } elseif ($method === 'findoneby' && (new ObjectType(self::REPOSITORY))->isSuperTypeOf($receiver)->yes()) {
+        } elseif ($method === 'findoneby' && Types::isInstanceOf($receiver, self::REPOSITORY)) {
             $locked = false;
         } else {
             return null;

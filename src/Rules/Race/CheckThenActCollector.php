@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace IanFoxDev\MoneyLint\Rules\Race;
 
 use IanFoxDev\MoneyLint\MoneyExpressions;
+use IanFoxDev\MoneyLint\Types;
 use PhpParser\Node;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Identifier;
 use PhpParser\NodeFinder;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
-use PHPStan\Type\ObjectType;
 
 /**
  * Facts for money.checkThenAct, per function:
@@ -79,7 +79,7 @@ final class CheckThenActCollector implements Collector
             if (in_array($method, self::SAVES, true) && $node->var instanceof Expr\Variable && is_string($node->var->name)) {
                 return ['persist', $function, $node->var->name, $line, '', ''];
             }
-            if ($method === 'flush' && (new ObjectType(self::OBJECT_MANAGER))->isSuperTypeOf($scope->getType($node->var))->yes()) {
+            if ($method === 'flush' && Types::isInstanceOf($scope->getType($node->var), self::OBJECT_MANAGER)) {
                 return ['persist', $function, '', $line, '', ''];
             }
         }

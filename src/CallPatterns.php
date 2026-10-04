@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace IanFoxDev\MoneyLint;
 
 use PHPStan\Reflection\ClassReflection;
-use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
-use PHPStan\Type\TypeCombinator;
 
 /**
  * A list of 'Class::method' patterns from the configuration. The class matches
@@ -61,9 +59,8 @@ final class CallPatterns
     public function matchesType(Type $type, string $method): bool
     {
         $method = strtolower($method);
-        $type = TypeCombinator::removeNull($type);
         foreach ($this->patterns as $class => $methods) {
-            if ((isset($methods['*']) || isset($methods[$method])) && (new ObjectType($class))->isSuperTypeOf($type)->yes()) {
+            if ((isset($methods['*']) || isset($methods[$method])) && Types::isInstanceOf($type, $class)) {
                 return true;
             }
         }
