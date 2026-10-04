@@ -62,6 +62,8 @@ final class CheckoutController
         $em->createQuery('UPDATE LedgerFixtures\Account a SET a.balance = a.balance + :amount')->execute();
         $account->setBalance(5);
         $wallet->increment('visits', 1, ['balance' => 0]);
+        $found = Wallet::query()->find(1);
+        $found->balance += 1;
 
         // Not reported: other columns and tables, reads.
         $wallet->increment('visits');

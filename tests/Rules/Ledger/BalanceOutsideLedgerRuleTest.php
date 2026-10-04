@@ -48,6 +48,7 @@ final class BalanceOutsideLedgerRuleTest extends RuleTestCase
             [self::message($account, 'a DQL UPDATE'), 62, self::TIP],
             [self::message($account, 'setBalance()'), 63, self::TIP],
             [self::message($wallet, 'increment()'), 64, self::TIP],
+            [self::message($wallet, 'an assignment'), 66, self::TIP],
         ]);
     }
 
