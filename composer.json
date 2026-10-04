@@ -1,0 +1,56 @@
+{
+    "name": "ianfoxdev/money-lint",
+    "description": "PHPStan rules for code that moves money: floats in amounts, HTTP calls inside database transactions, balance updates that skip the ledger, check-then-act without a lock.",
+    "type": "phpstan-extension",
+    "license": "MIT",
+    "keywords": [
+        "phpstan",
+        "phpstan-extension",
+        "static-analysis",
+        "money",
+        "payments",
+        "fintech",
+        "transactions",
+        "laravel",
+        "doctrine"
+    ],
+    "homepage": "https://github.com/IanFoxDev/money-lint",
+    "authors": [
+        {
+            "name": "Anatoly Pankratyev",
+            "email": "ianfoxdeveloper@gmail.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/IanFoxDev/money-lint/issues",
+        "source": "https://github.com/IanFoxDev/money-lint"
+    },
+    "require": {
+        "php": "^8.3",
+        "phpstan/phpstan": "^2.1"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.64",
+        "phpunit/phpunit": "^12.5 || ^13.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "IanFoxDev\\MoneyLint\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "IanFoxDev\\MoneyLint\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "phpstan": {
+            "includes": [
+                "extension.neon"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

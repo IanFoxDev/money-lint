@@ -1,0 +1,8 @@
+parameters:
+  level: max
+  paths:
+    - src
+    - tests
+  excludePaths:
+    # Rule fixtures contain the mistakes the rules exist to find.
+    - tests/*/data/*
