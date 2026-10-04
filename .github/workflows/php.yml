@@ -15,7 +15,7 @@ jobs:
         php: ["8.3", "8.4", "8.5"]
         dependencies: ["highest"]
         include:
-          # PHPStan 2.1 and PHPUnit 12.5, the oldest versions composer.json allows.
+          # PHPStan 2.1.3 and PHPUnit 12.5, the oldest versions composer.json allows.
           - php: "8.3"
             dependencies: lowest
     steps:
