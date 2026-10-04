@@ -31,6 +31,7 @@ parameters:
 | [`money.sideEffectInTransaction`](docs/rules/side-effect-in-transaction.md) | An HTTP call, email or broker message inside `DB::transaction()` or `wrapInTransaction()` |
 | [`money.dispatchInTransaction`](docs/rules/dispatch-in-transaction.md) | A Laravel job or mail queued inside a transaction without `afterCommit()` |
 | [`money.balanceOutsideLedger`](docs/rules/balance-outside-ledger.md) | A balance you listed changed outside the ledger: `increment()`, `+=`, `UPDATE ... SET balance` |
+| [`money.checkThenAct`](docs/rules/check-then-act.md) | Money read without a lock, changed from its old value and saved: a lost update under concurrency |
 
 ## License
 

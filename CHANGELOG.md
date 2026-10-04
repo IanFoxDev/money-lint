@@ -27,3 +27,6 @@ configuration or rule identifiers; such changes are marked **BREAKING**.
   outside the classes in `parameters.money.balanceWriters`, through assignments,
   Eloquent `increment()` and `update()`, the query builder, setters, SQL or DQL. See
   [docs/rules/balance-outside-ledger.md](docs/rules/balance-outside-ledger.md).
+- `money.checkThenAct`: money loaded without a lock (Eloquent or Doctrine), changed
+  from its old value and saved in the same function. See
+  [docs/rules/check-then-act.md](docs/rules/check-then-act.md).
