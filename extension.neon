@@ -5,6 +5,8 @@ parametersSchema:
     transactions: listOf(string())
     sideEffects: listOf(string())
     queueAfterCommit: bool()
+    balances: listOf(string())
+    balanceWriters: listOf(string())
   ])
 
 parameters:
@@ -47,6 +49,12 @@ parameters:
     # has nothing to report.
     queueAfterCommit: false
 
+    # Balances that only the ledger may change: 'App\Models\Wallet::balance' for a
+    # model or entity, 'wallets.balance' for a table. Empty by default.
+    balances: []
+    # Classes that may change them: the ledger, and whatever it delegates to.
+    balanceWriters: []
+
 services:
   -
     class: IanFoxDev\MoneyLint\MoneyDetector
@@ -55,6 +63,9 @@ services:
       attributes: %money.attributes%
   -
     class: IanFoxDev\MoneyLint\MoneyExpressions
+  -
+    class: IanFoxDev\MoneyLint\Rules\Ledger\Balances
+    arguments: [%money.balances%, %money.balanceWriters%]
   moneyLint.transactions:
     class: IanFoxDev\MoneyLint\CallPatterns
     arguments: [%money.transactions%]
@@ -96,6 +107,7 @@ services:
       - phpstan.collector
 
 rules:
+  - IanFoxDev\MoneyLint\Rules\Ledger\BalanceOutsideLedgerRule
   - IanFoxDev\MoneyLint\Rules\Transaction\SideEffectInTransactionRule
   - IanFoxDev\MoneyLint\Rules\Float\FloatPropertyRule
   - IanFoxDev\MoneyLint\Rules\Float\FloatParameterRule

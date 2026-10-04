@@ -1,0 +1,11 @@
+includes:
+  - patterns.neon
+
+parameters:
+  money:
+    balances:
+      - LedgerFixtures\Wallet::balance
+      - LedgerFixtures\Account::balance
+      - wallets.balance
+    balanceWriters:
+      - LedgerFixtures\Ledger
