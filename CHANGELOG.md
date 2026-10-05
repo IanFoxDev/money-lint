@@ -7,6 +7,12 @@ configuration or rule identifiers; such changes are marked **BREAKING**.
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-10-05
+
+The first release: five PHPStan rules for code that moves money, for Laravel and
+Doctrine. Checked on two example applications in CI and on five open-source
+applications that handle money (see [docs/precision.md](docs/precision.md)).
+
 ### Added
 
 - `#[Money]` attribute and `parameters.money` settings (`properties` name patterns,
@@ -30,3 +36,6 @@ configuration or rule identifiers; such changes are marked **BREAKING**.
 - `money.checkThenAct`: money loaded without a lock (Eloquent or Doctrine), changed
   from its old value and saved in the same function. See
   [docs/rules/check-then-act.md](docs/rules/check-then-act.md).
+
+[Unreleased]: https://github.com/IanFoxDev/money-lint/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/IanFoxDev/money-lint/releases/tag/v0.1.0

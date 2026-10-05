@@ -11,7 +11,8 @@ transaction, a job queued before the commit, a balance read without a lock and w
 back, a balance changed without a ledger entry, an amount in a float. A careful
 reviewer catches them. A linter catches them every time.
 
-> Status: in development, nothing released yet.
+> Status: v0.1. Until 1.0 a minor version may change rule identifiers or settings;
+> such changes are marked **BREAKING** in the [CHANGELOG](CHANGELOG.md).
 
 ## Install
 
